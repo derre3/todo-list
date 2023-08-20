@@ -34,11 +34,15 @@ const projectItem = (projectTitle, items = []) => {
     const todo = todoItem(title, description, dueDate, priority, status);
     items.push(todo);
   };
+  const removeTodo = (index) => {
+    items.splice(index, 1);
+  };
 
   return {
     getTitle,
     getTodos,
     addTodo,
+    removeTodo,
   };
 };
 
@@ -56,10 +60,14 @@ const projectList = (items = []) => {
     const project = projectItem(projectTitle);
     items.push(project);
   };
+  const removeProject = (index) => {
+    items.splice(index, 1);
+  };
 
   return {
     getProjects,
     addProject,
+    removeProject,
   };
 };
 
