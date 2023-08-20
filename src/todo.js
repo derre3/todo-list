@@ -20,27 +20,47 @@ const todoItem = (title, description, dueDate, priority, status) => {
 // a project item contains the to-do items
 // has a title
 // items is an array containing the to-do items
-const projectItem = (title, items = []) => {
-  const getTitle = () => title;
-  const getItems = () => items;
-  const add = (todo) => items.push(todo);
+const projectItem = (projectTitle, items = []) => {
+  const getTitle = () => projectTitle;
+  const getTodos = (index) => {
+    // the index of the array can be accessed directly
+    // through the function in case it's not stored
+    // in a array
+    if (index == null) return items;
+    return items[index];
+  };
+  // creates a new todo and stores it in the current project array
+  const addTodo = (title, description, dueDate, priority, status) => {
+    const todo = todoItem(title, description, dueDate, priority, status);
+    items.push(todo);
+  };
 
   return {
     getTitle,
-    getItems,
-    add,
+    getTodos,
+    addTodo,
   };
 };
 
 // contains all the projects created
 const projectList = (items = []) => {
-  const getItems = () => items;
-  const add = (project) => items.push(project);
+  const getProjects = (index) => {
+    // the index of the array can be accessed directly
+    // through the function in case it's not stored
+    // in a array
+    if (index == null) return items;
+    return items[index];
+  };
+  // creates a new project and stores it in the current project-container array
+  const addProject = (projectTitle) => {
+    const project = projectItem(projectTitle);
+    items.push(project);
+  };
 
   return {
-    getItems,
-    add,
+    getProjects,
+    addProject,
   };
 };
 
-export { todoItem, projectItem, projectList };
+export { projectItem, projectList };
