@@ -39,9 +39,6 @@ function newItem(item, project) {
   infoContainer.appendChild(editButton);
   infoContainer.appendChild(deleteButton);
 
-  // const items = document.querySelectorAll('.todo-item');
-  // const items = document.querySelector('.todo-item');
-
   detailsButton.addEventListener('click', () => {
     console.log(project.getTodos());
     console.log(item.getTitle());
@@ -62,11 +59,19 @@ function newItem(item, project) {
 // default project will always be present
 // it's where to-dos not linked to any project will go
 const defaultProject = projectItem('default project');
-defaultProject.addTodo('title', 'description', 'due date', 0);
-console.log(defaultProject.getTodos(0).getTitle());
+defaultProject.addTodo('one', 'description', '01/01', 0, false);
+defaultProject.addTodo('two', 'description', '02/02', 1, true);
+defaultProject.addTodo('three', 'description', '03/03', 2, false);
+
+defaultProject.getTodos().forEach((item) => {
+  newItem(item, defaultProject);
+});
 
 const projectContainer = projectList();
 const projects = projectContainer.getProjects();
 projectContainer.addProject('new project');
-projects[0].addTodo('new title', 'new description', 'new due date', 1);
-console.log(projects[0].getTitle());
+projects[0].addTodo('new title', 'new description', 'new due date', 0, true);
+
+projects[0].getTodos().forEach((item) => {
+  newItem(item, projects[0]);
+});
