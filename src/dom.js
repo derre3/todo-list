@@ -1,7 +1,7 @@
 import './style.css';
 import { projectItem, projectList } from './todo';
 
-function newItem(item, project) {
+function renderItem(item, project) {
   const mainContainer = document.querySelector('.main-container');
   const itemContainer = document.createElement('div');
   itemContainer.classList.add('todo-item');
@@ -53,6 +53,26 @@ function newItem(item, project) {
     itemContainer.remove();
     const index = Array.from(project.getTodos()).indexOf(item);
     project.removeTodo(index);
+  });
+}
+
+function renderProject(project) {
+  const projectContainer = document.querySelector('#project-container');
+  const projectItem = document.createElement('div');
+  projectItem.classList.add('project-item');
+  projectContainer.appendChild(projectItem);
+  projectItem.textContent = project.getTitle();
+
+  projectItem.addEventListener('click', () => {
+    const todoItems = document.querySelectorAll('.todo-item');
+    if (todoItems != null) {
+      todoItems.forEach((item) => {
+        item.remove();
+      });
+    }
+    project.getTodos().forEach((item) => {
+      renderItem(item, project);
+    });
   });
 }
 
