@@ -6,7 +6,7 @@
 
 body {
   height: 100dvh;
-  width: 100dvw;
+  /* width: 100dvw; */
 }
 
 body button {
@@ -30,6 +30,11 @@ header {
   padding: 2rem;
 }
 
+.main-project-container {
+  display: flex;
+  gap: 0.7rem;
+}
+
 .sidebar {
   grid-area: sidebar;
   display: flex;
@@ -47,6 +52,8 @@ header {
 }
 
 .sidebar button {
+  position: sticky;
+  bottom: 3rem;
   border: none;
   margin-top: auto;
   align-self: flex-start;
