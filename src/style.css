@@ -4,9 +4,16 @@
   padding: 0;
 }
 
+button {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  font-size: 1rem;
+}
+
 body {
   height: 100dvh;
-  /* width: 100dvw; */
 }
 
 body button {
@@ -76,6 +83,7 @@ header {
 }
 
 .todo-item {
+  position: relative;
   font-size: 1.5rem;
   display: flex;
   justify-content: space-between;
@@ -83,6 +91,10 @@ header {
   background-color: #4d4d4d;
   color: #e3e3e3;
   border-radius: 10px;
+}
+
+.todo-item button {
+  color: #e3e3e3;
 }
 
 .todo-item div p {
@@ -122,4 +134,26 @@ header {
 .todo-item div:nth-child(2) {
   display: flex;
   gap: 1rem;
+}
+
+.modal {
+  position: fixed;
+  text-align: justify;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: 10;
+  padding: 2rem;
+  border: none;
+  min-width: 500px;
+  max-width: 500px;
+}
+
+.modal div {
+  display: flex;
+  /* gap: 1rem; */
+}
+
+.modal div > p:nth-child(1) {
+  width: 25%;
 }
