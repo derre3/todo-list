@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 // a to-do item is an object containing:
 // title, description,due date, priority
 // status is either done(true) or not(false)
@@ -7,6 +8,10 @@ const todoItem = (title, description, dueDate, priority, status) => {
   const getDueDate = () => dueDate;
   const getPriority = () => priority;
   const getStatus = () => status;
+  const changeStatus = () => {
+    if (status) status = false;
+    else status = true;
+  };
 
   return {
     getTitle,
@@ -14,6 +19,7 @@ const todoItem = (title, description, dueDate, priority, status) => {
     getDueDate,
     getPriority,
     getStatus,
+    changeStatus,
   };
 };
 
