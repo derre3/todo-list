@@ -1,6 +1,40 @@
 import './style.css';
 import { projectItem, projectList } from './todo';
 
+function renderDetailsDialog(item, project) {
+  const createElement = (text, type = 'div') => {
+    const element = document.createElement(type);
+    if (text != null) element.textContent = text;
+    return element;
+  };
+
+  const dialog = document.createElement('dialog');
+  dialog.classList.add('modal');
+  dialog.appendChild(createElement(item.getTitle(), 'h1'));
+  dialog.appendChild(createElement(item.getDescription(), 'em'));
+  const title = createElement();
+  const dueDate = createElement();
+  const priority = createElement();
+
+  title.appendChild(createElement('Project:', 'p'));
+  title.appendChild(createElement(project.getTitle(), 'p'));
+
+  dueDate.appendChild(createElement('Due date:', 'p'));
+  dueDate.appendChild(createElement(item.getDueDate(), 'p'));
+
+  priority.appendChild(createElement('Priority:', 'p'));
+  priority.appendChild(createElement(item.getPriority(), 'p'));
+
+  dialog.appendChild(title);
+  dialog.appendChild(dueDate);
+  dialog.appendChild(priority);
+
+  // dialog.appendChild(createElement(project.getTitle(), 'p'));
+  // dialog.appendChild(createElement(item.getDueDate(), 'p'));
+  // dialog.appendChild(createElement(item.getPriority(), 'p'));
+  return dialog;
+}
+
 function renderItem(item, project) {
   const mainContainer = document.querySelector('.main-container');
   const itemContainer = document.createElement('div');
@@ -40,10 +74,19 @@ function renderItem(item, project) {
   infoContainer.appendChild(deleteButton);
 
   detailsButton.addEventListener('click', () => {
-    // WIP
-    console.log(project.getTodos());
-    console.log(item.getTitle());
-    console.log(item.getDescription());
+    itemContainer.appendChild(dialog);
+    dialog.showModal();
+    dialog.addEventListener('click', (e) => {
+      const dialogDimensions = dialog.getBoundingClientRect();
+      if (
+        e.clientX < dialogDimensions.left ||
+        e.clientX > dialogDimensions.right ||
+        e.clientY < dialogDimensions.top ||
+        e.clientY > dialogDimensions.bottom
+      ) {
+        dialog.close();
+      }
+    });
   });
 
   editButton.addEventListener('click', () => {
