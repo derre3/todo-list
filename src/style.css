@@ -85,16 +85,37 @@ header {
   border-radius: 10px;
 }
 
+.todo-item div p {
+  position: relative;
+}
+
+.strikethrough::before {
+  position: absolute;
+  bottom: 50%;
+  content: '';
+  width: 100%;
+  height: 2px;
+  background-color: #ffffff;
+}
+
 .priority-low {
-  border-left: 6px solid green;
+  border-left: 12px solid transparent;
+  transition: border 150ms;
 }
 
 .priority-medium {
-  border-left: 6px solid yellow;
+  border-left: 12px solid #f2d73b;
+  transition: border 150ms;
 }
 
 .priority-high {
-  border-left: 6px solid red;
+  border-left: 12px solid #d90000;
+  transition: border 150ms;
+}
+
+.priority-null {
+  border-left: 12px solid #e3e3e3;
+  transition: border 150ms;
 }
 
 .todo-item div:nth-child(1),
