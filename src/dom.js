@@ -28,10 +28,6 @@ function renderDetailsDialog(item, project) {
   dialog.appendChild(title);
   dialog.appendChild(dueDate);
   dialog.appendChild(priority);
-
-  // dialog.appendChild(createElement(project.getTitle(), 'p'));
-  // dialog.appendChild(createElement(item.getDueDate(), 'p'));
-  // dialog.appendChild(createElement(item.getPriority(), 'p'));
   return dialog;
 }
 
@@ -51,9 +47,15 @@ function renderItem(item, project) {
   const dueDate = document.createElement('p');
   const editButton = document.createElement('button');
   const deleteButton = document.createElement('button');
+  const dialog = renderDetailsDialog(item, project);
 
   inputCheckMark.setAttribute('type', 'checkbox');
   inputCheckMark.checked = item.getStatus();
+  if (inputCheckMark.checked) {
+    itemTitle.classList.add('strikethrough');
+    dueDate.classList.add('strikethrough');
+    itemContainer.classList.add('priority-null');
+  }
 
   itemTitle.textContent = item.getTitle();
   detailsButton.textContent = 'Details';
@@ -72,6 +74,13 @@ function renderItem(item, project) {
   infoContainer.appendChild(dueDate);
   infoContainer.appendChild(editButton);
   infoContainer.appendChild(deleteButton);
+
+  inputCheckMark.addEventListener('click', () => {
+    itemTitle.classList.toggle('strikethrough');
+    dueDate.classList.toggle('strikethrough');
+    itemContainer.classList.toggle('priority-null');
+    item.changeStatus();
+  });
 
   detailsButton.addEventListener('click', () => {
     itemContainer.appendChild(dialog);
