@@ -40,12 +40,14 @@ function renderItem(item, project) {
   infoContainer.appendChild(deleteButton);
 
   detailsButton.addEventListener('click', () => {
+    // WIP
     console.log(project.getTodos());
     console.log(item.getTitle());
     console.log(item.getDescription());
   });
 
   editButton.addEventListener('click', () => {
+    // WIP
     console.log('edit');
   });
 
@@ -58,12 +60,12 @@ function renderItem(item, project) {
 
 function renderProject(project) {
   const projectContainer = document.querySelector('#project-container');
-  const projectItem = document.createElement('div');
-  projectItem.classList.add('project-item');
-  projectContainer.appendChild(projectItem);
-  projectItem.textContent = project.getTitle();
+  const projectElement = document.createElement('div');
+  projectElement.classList.add('project-item');
+  projectContainer.appendChild(projectElement);
+  projectElement.textContent = project.getTitle();
 
-  projectItem.addEventListener('click', () => {
+  projectElement.addEventListener('click', () => {
     const todoItems = document.querySelectorAll('.todo-item');
     if (todoItems != null) {
       todoItems.forEach((item) => {
@@ -76,6 +78,31 @@ function renderProject(project) {
   });
 }
 
+function renderAllItems(mainProject, otherProjects) {
+  const mainProjectContainer = document.querySelector(
+    '.main-project-container'
+  );
+
+  mainProjectContainer.addEventListener('click', () => {
+    const todoItems = document.querySelectorAll('.todo-item');
+    if (todoItems != null) {
+      todoItems.forEach((item) => {
+        item.remove();
+      });
+    }
+    mainProject.getTodos().forEach((item) => {
+      renderItem(item, mainProject);
+    });
+    otherProjects.forEach((project) => {
+      project.getTodos().forEach((item) => {
+        renderItem(item, project);
+      });
+    });
+  });
+}
+
+// PLACEHOLDER LOCATION FOR THE CODE BELOW (TESTING PURPOSES)
+
 // default project will always be present
 // it's where to-dos not linked to any project will go
 const defaultProject = projectItem('default project');
@@ -83,15 +110,21 @@ defaultProject.addTodo('one', 'description', '01/01', 0, false);
 defaultProject.addTodo('two', 'description', '02/02', 1, true);
 defaultProject.addTodo('three', 'description', '03/03', 2, false);
 
-defaultProject.getTodos().forEach((item) => {
-  newItem(item, defaultProject);
-});
-
 const projectContainer = projectList();
 const projects = projectContainer.getProjects();
 projectContainer.addProject('new project');
-projects[0].addTodo('new title', 'new description', 'new due date', 0, true);
+projectContainer.addProject('another project');
+projects[0].addTodo('task 0', 'new description', 'new due date', 0, true);
+projects[0].addTodo('task 1', 'new description', 'new due date', 1, true);
+projects[0].addTodo('task 2', 'new description', 'new due date', 2, true);
+projects[0].addTodo('task 3', 'new description', 'new due date', 2, true);
+projects[1].addTodo('task 4', 'new description', 'new due date', 0, true);
+projects[1].addTodo('task 5', 'new description', 'new due date', 1, true);
+projects[1].addTodo('task 6', 'new description', 'new due date', 2, true);
+projects[1].addTodo('task 7', 'new description', 'new due date', 2, true);
 
-projects[0].getTodos().forEach((item) => {
-  newItem(item, projects[0]);
+projects.forEach((project) => {
+  renderProject(project);
 });
+
+renderAllItems(defaultProject, projects);
