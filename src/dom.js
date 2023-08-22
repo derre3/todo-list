@@ -23,7 +23,11 @@ function renderDetailsDialog(item, project) {
   dueDate.appendChild(createElement(item.getDueDate(), 'p'));
 
   priority.appendChild(createElement('Priority:', 'p'));
-  priority.appendChild(createElement(item.getPriority(), 'p'));
+  let priorityValue;
+  if (item.getPriority() === 0) priorityValue = 'Low';
+  if (item.getPriority() === 1) priorityValue = 'Medium';
+  if (item.getPriority() === 2) priorityValue = 'High';
+  priority.appendChild(createElement(priorityValue, 'p'));
 
   dialog.appendChild(title);
   dialog.appendChild(dueDate);
