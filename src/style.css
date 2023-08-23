@@ -105,7 +105,8 @@ header {
   position: absolute;
   bottom: 50%;
   content: '';
-  width: 100%;
+  left: -5%;
+  width: 110%;
   height: 2px;
   background-color: #ffffff;
 }
@@ -130,8 +131,7 @@ header {
   transition: border 150ms;
 }
 
-.todo-item div:nth-child(1),
-.todo-item div:nth-child(2) {
+.todo-item > div {
   display: flex;
   gap: 1rem;
 }
