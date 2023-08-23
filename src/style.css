@@ -136,7 +136,7 @@ header {
   gap: 1rem;
 }
 
-.modal {
+.modal-details {
   position: fixed;
   text-align: justify;
   top: 50%;
@@ -149,11 +149,51 @@ header {
   max-width: 500px;
 }
 
-.modal div {
+.modal-details div {
   display: flex;
-  /* gap: 1rem; */
 }
 
-.modal div > p:nth-child(1) {
+.modal-details div > p:nth-child(1) {
   width: 25%;
+}
+
+.modal-edit {
+  position: fixed;
+  text-align: justify;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: 10;
+  padding: 2rem;
+  border: none;
+  min-width: 500px;
+  max-width: 500px;
+}
+
+.modal-edit p {
+  width: 25%;
+}
+
+.modal-edit > div {
+  display: flex;
+  margin-top: 0.5rem;
+  gap: 0.5rem;
+}
+
+.modal-edit > div:nth-child(1) {
+  flex-direction: column;
+}
+
+.modal-edit > div:nth-child(3) div {
+  display: flex;
+  gap: 1rem;
+}
+
+.modal-edit > div:nth-child(4) {
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.modal-edit button {
+  color: black;
 }
