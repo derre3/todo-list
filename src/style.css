@@ -111,22 +111,22 @@ header {
   background-color: #ffffff;
 }
 
-.priority-low {
+.task-priority-low {
   border-left: 12px solid transparent;
   transition: border 150ms;
 }
 
-.priority-medium {
+.task-priority-medium {
   border-left: 12px solid #f2d73b;
   transition: border 150ms;
 }
 
-.priority-high {
+.task-priority-high {
   border-left: 12px solid #d90000;
   transition: border 150ms;
 }
 
-.priority-null {
+.task-priority-null {
   border-left: 12px solid #e3e3e3;
   transition: border 150ms;
 }

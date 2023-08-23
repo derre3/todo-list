@@ -89,9 +89,12 @@ function renderItem(item, project) {
   const mainContainer = document.querySelector('.main-container');
   const itemContainer = document.createElement('div');
   itemContainer.classList.add('todo-item');
-  if (item.getPriority() === 0) itemContainer.classList.add('priority-low');
-  if (item.getPriority() === 1) itemContainer.classList.add('priority-medium');
-  if (item.getPriority() === 2) itemContainer.classList.add('priority-high');
+  if (item.getPriority() === 0)
+    itemContainer.classList.add('task-priority-low');
+  if (item.getPriority() === 1)
+    itemContainer.classList.add('task-priority-medium');
+  if (item.getPriority() === 2)
+    itemContainer.classList.add('task-priority-high');
 
   const titleContainer = document.createElement('div');
   const inputCheckMark = document.createElement('input');
@@ -107,7 +110,7 @@ function renderItem(item, project) {
   if (inputCheckMark.checked) {
     itemTitle.classList.add('strikethrough');
     dueDate.classList.add('strikethrough');
-    itemContainer.classList.add('priority-null');
+    itemContainer.classList.add('task-priority-null');
   }
 
   itemTitle.textContent = item.getTitle();
@@ -131,7 +134,7 @@ function renderItem(item, project) {
   inputCheckMark.addEventListener('click', () => {
     itemTitle.classList.toggle('strikethrough');
     dueDate.classList.toggle('strikethrough');
-    itemContainer.classList.toggle('priority-null');
+    itemContainer.classList.toggle('task-priority-null');
     item.changeStatus();
   });
 
