@@ -101,8 +101,6 @@ function renderItem(item, project) {
   const dueDate = document.createElement('p');
   const editButton = document.createElement('button');
   const deleteButton = document.createElement('button');
-  const dialog = renderDetailsDialog(item, project);
-  const dialogEdit = renderEditDialog(item, project);
 
   inputCheckMark.setAttribute('type', 'checkbox');
   inputCheckMark.checked = item.getStatus();
@@ -138,6 +136,7 @@ function renderItem(item, project) {
   });
 
   detailsButton.addEventListener('click', () => {
+    const dialog = renderDetailsDialog(item, project);
     itemContainer.appendChild(dialog);
     dialog.showModal();
     dialog.addEventListener('click', (e) => {
