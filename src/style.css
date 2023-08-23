@@ -170,6 +170,24 @@ header {
   max-width: 500px;
 }
 
+.button-priority-low {
+  background-color: #a8a8a8;
+}
+.button-priority-medium {
+  background-color: #f2d73b;
+}
+.button-priority-high {
+  background-color: #d90000;
+}
+.button-priority-null {
+  background-color: transparent;
+}
+
+.modal-edit > div:nth-child(3) button {
+  width: 75px;
+  border-radius: 5px;
+}
+
 .modal-edit p {
   width: 25%;
 }

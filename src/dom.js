@@ -62,8 +62,11 @@ function renderEditDialog(item) {
   const priorityContainer = createElement(null, 'div');
   priorityContainer.appendChild(createElement('Priority:', 'p'));
   const buttonPriorityLow = createElement('Low', 'button');
+  buttonPriorityLow.classList.add('button-priority-low');
   const buttonPriorityMedium = createElement('Medium', 'button');
+  buttonPriorityMedium.classList.add('button-priority-medium');
   const buttonPriorityHigh = createElement('High', 'button');
+  buttonPriorityHigh.classList.add('button-priority-high');
   const buttonPriorityContainer = createElement(null, 'div');
   buttonPriorityContainer.appendChild(buttonPriorityLow);
   buttonPriorityContainer.appendChild(buttonPriorityMedium);
@@ -77,6 +80,43 @@ function renderEditDialog(item) {
   buttonContainer.appendChild(buttonCancel);
   buttonContainer.appendChild(buttonConfirm);
   dialog.appendChild(buttonContainer);
+
+  const resetPriorityButton = () => {
+    Array.from(buttonPriorityContainer.children).forEach((button) => {
+      button.classList.remove('button-priority-null');
+      button.classList.add('button-priority-null');
+    });
+  };
+
+  let priorityValue = item.getPriority();
+  if (priorityValue === 0) {
+    resetPriorityButton();
+    buttonPriorityLow.classList.toggle('button-priority-null');
+  }
+  if (priorityValue === 1) {
+    resetPriorityButton();
+    buttonPriorityMedium.classList.toggle('button-priority-null');
+  }
+  if (priorityValue === 2) {
+    resetPriorityButton();
+    buttonPriorityHigh.classList.toggle('button-priority-null');
+  }
+
+  buttonPriorityLow.addEventListener('click', () => {
+    priorityValue = 0;
+    resetPriorityButton();
+    buttonPriorityLow.classList.toggle('button-priority-null');
+  });
+  buttonPriorityMedium.addEventListener('click', () => {
+    priorityValue = 1;
+    resetPriorityButton();
+    buttonPriorityMedium.classList.toggle('button-priority-null');
+  });
+  buttonPriorityHigh.addEventListener('click', () => {
+    priorityValue = 2;
+    resetPriorityButton();
+    buttonPriorityHigh.classList.toggle('button-priority-null');
+  });
 
   buttonCancel.addEventListener('click', () => {
     dialog.close();
@@ -156,9 +196,9 @@ function renderItem(item, project) {
   });
 
   editButton.addEventListener('click', () => {
-    // WIP
-    itemContainer.appendChild(dialogEdit);
-    dialogEdit.showModal();
+    const dialog = renderEditDialog(item, project);
+    itemContainer.appendChild(dialog);
+    dialog.showModal();
   });
 
   deleteButton.addEventListener('click', () => {
