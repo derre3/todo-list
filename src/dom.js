@@ -1,15 +1,16 @@
 import './style.css';
 import { projectItem, projectList } from './todo';
 
-function renderDetailsDialog(item, project) {
-  const createElement = (text, type = 'div') => {
-    const element = document.createElement(type);
-    if (text != null) element.textContent = text;
-    return element;
-  };
+// got tired of writing document.document.document.document
+const createElement = (text, type = 'div') => {
+  const element = document.createElement(type);
+  if (text != null) element.textContent = text;
+  return element;
+};
 
+function renderDetailsDialog(item, project) {
   const dialog = document.createElement('dialog');
-  dialog.classList.add('modal');
+  dialog.classList.add('modal-details');
   dialog.appendChild(createElement(item.getTitle(), 'h1'));
   dialog.appendChild(createElement(item.getDescription(), 'em'));
   const title = createElement();
@@ -35,6 +36,55 @@ function renderDetailsDialog(item, project) {
   return dialog;
 }
 
+function renderEditDialog(item) {
+  const dialog = document.createElement('dialog');
+  dialog.classList.add('modal-edit');
+
+  const inputContainer = createElement(null, 'div');
+  const inputTitle = createElement(null, 'input');
+  const inputDescription = createElement(null, 'input');
+  inputTitle.setAttribute('type', 'text');
+  inputTitle.value = item.getTitle();
+  inputDescription.setAttribute('type', 'text');
+  inputDescription.value = item.getDescription();
+  inputContainer.appendChild(inputTitle);
+  inputContainer.appendChild(inputDescription);
+  dialog.appendChild(inputContainer);
+
+  const dateContainer = createElement(null, 'div');
+  dateContainer.appendChild(createElement('Due Date:', 'p'));
+  const inputDate = createElement(null, 'input');
+  inputDate.setAttribute('type', 'date');
+  inputDate.value = item.getDueDate();
+  dateContainer.appendChild(inputDate);
+  dialog.appendChild(dateContainer);
+
+  const priorityContainer = createElement(null, 'div');
+  priorityContainer.appendChild(createElement('Priority:', 'p'));
+  const buttonPriorityLow = createElement('Low', 'button');
+  const buttonPriorityMedium = createElement('Medium', 'button');
+  const buttonPriorityHigh = createElement('High', 'button');
+  const buttonPriorityContainer = createElement(null, 'div');
+  buttonPriorityContainer.appendChild(buttonPriorityLow);
+  buttonPriorityContainer.appendChild(buttonPriorityMedium);
+  buttonPriorityContainer.appendChild(buttonPriorityHigh);
+  priorityContainer.appendChild(buttonPriorityContainer);
+  dialog.appendChild(priorityContainer);
+
+  const buttonContainer = createElement(null, 'div');
+  const buttonConfirm = createElement('Confirm', 'button');
+  const buttonCancel = createElement('Cancel', 'button');
+  buttonContainer.appendChild(buttonCancel);
+  buttonContainer.appendChild(buttonConfirm);
+  dialog.appendChild(buttonContainer);
+
+  buttonCancel.addEventListener('click', () => {
+    dialog.close();
+  });
+
+  return dialog;
+}
+
 function renderItem(item, project) {
   const mainContainer = document.querySelector('.main-container');
   const itemContainer = document.createElement('div');
@@ -52,6 +102,7 @@ function renderItem(item, project) {
   const editButton = document.createElement('button');
   const deleteButton = document.createElement('button');
   const dialog = renderDetailsDialog(item, project);
+  const dialogEdit = renderEditDialog(item, project);
 
   inputCheckMark.setAttribute('type', 'checkbox');
   inputCheckMark.checked = item.getStatus();
@@ -104,7 +155,8 @@ function renderItem(item, project) {
 
   editButton.addEventListener('click', () => {
     // WIP
-    console.log('edit');
+    itemContainer.appendChild(dialogEdit);
+    dialogEdit.showModal();
   });
 
   deleteButton.addEventListener('click', () => {
