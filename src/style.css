@@ -54,11 +54,19 @@ header {
   font-size: 1.5rem;
 }
 
+.project-item {
+  display: flex;
+}
+
+.project-item button {
+  margin-left: auto;
+}
+
 .sidebar .project-item {
   padding-left: 1rem;
 }
 
-.sidebar button {
+#add-button {
   position: sticky;
   bottom: 3rem;
   border: none;
