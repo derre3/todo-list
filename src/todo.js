@@ -4,22 +4,42 @@
 // status is either done(true) or not(false)
 const todoItem = (title, description, dueDate, priority, status) => {
   const getTitle = () => title;
+  const setTitle = (value) => {
+    title = value;
+  };
+
   const getDescription = () => description;
+  const setDescription = (value) => {
+    description = value;
+  };
+
   const getDueDate = () => dueDate;
+  const setDueDate = (value) => {
+    dueDate = value;
+  };
+
   const getPriority = () => priority;
+  const setPriority = (value) => {
+    priority = value;
+  };
+
   const getStatus = () => status;
-  const changeStatus = () => {
+  const switchStatus = () => {
     if (status) status = false;
     else status = true;
   };
 
   return {
     getTitle,
+    setTitle,
     getDescription,
+    setDescription,
     getDueDate,
+    setDueDate,
     getPriority,
+    setPriority,
     getStatus,
-    changeStatus,
+    switchStatus,
   };
 };
 
