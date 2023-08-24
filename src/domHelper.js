@@ -13,4 +13,10 @@ function loopProject(project, action) {
   });
 }
 
-export { removeTodoItems, loopProject };
+function newElement(text, type = 'div') {
+  const element = document.createElement(type);
+  if (text != null) element.textContent = text;
+  return element;
+}
+
+export { removeTodoItems, loopProject, newElement };

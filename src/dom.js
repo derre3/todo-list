@@ -225,7 +225,7 @@ function renderProject(project) {
   });
 }
 
-function renderAllItems(mainProject, otherProjects) {
+function renderMainProject(mainProject) {
   const mainProjectContainer = document.querySelector(
     '.main-project-container'
   );
@@ -233,9 +233,6 @@ function renderAllItems(mainProject, otherProjects) {
   mainProjectContainer.addEventListener('click', () => {
     removeTodoItems();
     loopProject(mainProject, renderItem);
-    otherProjects.forEach((project) => {
-      loopProject(project, renderItem);
-    });
   });
 }
 
@@ -265,4 +262,4 @@ projects.forEach((project) => {
   renderProject(project);
 });
 
-renderAllItems(defaultProject, projects);
+renderMainProject(defaultProject);
