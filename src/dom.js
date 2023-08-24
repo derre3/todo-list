@@ -1,6 +1,7 @@
 import './style.css';
 import { projectItem, projectList } from './todo';
-import { removeTodoItems, loopProject, newElement } from './domHelper';
+// eslint-disable-next-line import/no-cycle
+import { newElement, refreshItems } from './domHelper';
 
 function renderDetailsDialog(item, project) {
   const dialog = newElement(null, 'dialog');
@@ -211,6 +212,19 @@ function renderItem(item, project) {
   });
 }
 
+function renderNewTodoButton(project) {
+  const mainContainer = document.querySelector('.main-container');
+  const button = newElement('New Task', 'button');
+  mainContainer.appendChild(button);
+  button.id = 'new-todo';
+
+  button.addEventListener('click', () => {
+    // placeholder for testing
+    project.addTodo('New Task', '', new Date().getFullYear(), 0, false);
+    refreshItems(project);
+  });
+}
+
 function renderProject(project, projectCollection) {
   const projectContainer = document.querySelector('#project-container');
   const projectElement = newElement();
@@ -235,7 +249,7 @@ function renderProject(project, projectCollection) {
   });
 }
 
-function renderMainProject(mainProject) {
+function renderMainProject(project) {
   const mainProjectContainer = document.querySelector(
     '.main-project-container'
   );
@@ -243,32 +257,47 @@ function renderMainProject(mainProject) {
   mainProjectContainer.addEventListener('click', () => {
     refreshItems(project);
   });
+  mainProjectContainer.click();
 }
 
-// PLACEHOLDER LOCATION FOR THE CODE BELOW (TESTING PURPOSES)
+function startProject(projectCollection) {
+  const addButton = document.querySelector('#add-button');
+  addButton.addEventListener('click', () => {
+    projectCollection.addProject('New Project');
+    const index = projectCollection.getProjects().length - 1;
+    renderProject(projectCollection.getProjects(index), projectCollection);
+  });
+}
 
-// default project will always be present
-// it's where to-dos not linked to any project will go
-const defaultProject = projectItem('default project');
-defaultProject.addTodo('one', 'description', '1997-06-21', 0, false);
-defaultProject.addTodo('two', 'description', '1995-02-15', 1, true);
-defaultProject.addTodo('three', 'description', '1989-05-04', 2, false);
+function initPage(blankMode = true) {
+  if (blankMode === true) {
+    renderMainProject(projectItem('home'));
+    startProject(projectList());
+    return;
+  }
+  const defaultProject = projectItem('default project');
+  defaultProject.addTodo('one', 'description', '1997-06-21', 0, false);
+  defaultProject.addTodo('two', 'description', '1995-02-15', 1, true);
+  defaultProject.addTodo('three', 'description', '1989-05-04', 2, false);
+  const projectContainer = projectList();
+  const projects = projectContainer.getProjects();
+  projectContainer.addProject('new project');
+  projectContainer.addProject('another project');
+  projects[0].addTodo('task 0', 'new description', '2023-08-23', 0, false);
+  projects[0].addTodo('task 1', 'new description', '2022-07-24', 1, false);
+  projects[0].addTodo('task 2', 'new description', '2021-06-25', 2, false);
+  projects[0].addTodo('task 3', 'new description', '2020-05-26', 2, true);
+  projects[1].addTodo('task 4', 'new description', '2019-04-27', 0, false);
+  projects[1].addTodo('task 5', 'new description', '2018-03-28', 1, false);
+  projects[1].addTodo('task 6', 'new description', '2017-03-29', 2, false);
+  projects[1].addTodo('task 7', 'new description', '2016-03-30', 2, true);
 
-const projectContainer = projectList();
-const projects = projectContainer.getProjects();
-projectContainer.addProject('new project');
-projectContainer.addProject('another project');
-projects[0].addTodo('task 0', 'new description', '2023-08-23', 0, false);
-projects[0].addTodo('task 1', 'new description', '2022-07-24', 1, false);
-projects[0].addTodo('task 2', 'new description', '2021-06-25', 2, false);
-projects[0].addTodo('task 3', 'new description', '2020-05-26', 2, true);
-projects[1].addTodo('task 4', 'new description', '2019-04-27', 0, false);
-projects[1].addTodo('task 5', 'new description', '2018-03-28', 1, false);
-projects[1].addTodo('task 6', 'new description', '2017-03-29', 2, false);
-projects[1].addTodo('task 7', 'new description', '2016-03-30', 2, true);
+  renderMainProject(defaultProject);
+  projectContainer.getProjects().forEach((project) => {
+    renderProject(project, projectContainer);
+  });
+}
 
-projectContainer.getProjects().forEach((project) => {
-  renderProject(project, projectContainer);
-});
+initPage();
 
-renderMainProject(defaultProject);
+export { renderNewTodoButton, renderItem };
