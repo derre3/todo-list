@@ -212,16 +212,28 @@ function renderItem(item, project) {
   });
 }
 
-function renderProject(project) {
+function renderProject(project, projectCollection) {
   const projectContainer = document.querySelector('#project-container');
   const projectElement = newElement();
   projectElement.classList.add('project-item');
   projectContainer.appendChild(projectElement);
-  projectElement.textContent = project.getTitle();
+  const projectTitle = newElement(project.getTitle(), 'p');
+  const removeButton = newElement('remove', 'button');
 
-  projectElement.addEventListener('click', () => {
+  projectElement.appendChild(projectTitle);
+  projectElement.appendChild(removeButton);
+
+  projectTitle.addEventListener('click', () => {
     removeTodoItems();
     loopProject(project, renderItem);
+  });
+
+  removeButton.addEventListener('click', () => {
+    const mainProject = document.querySelector('.main-project-container');
+    projectElement.remove();
+    mainProject.click();
+    const index = Array.from(projectCollection.getProjects().indexOf(project));
+    projectCollection.removeProject(index);
   });
 }
 
@@ -258,8 +270,8 @@ projects[1].addTodo('task 5', 'new description', '2018-03-28', 1, false);
 projects[1].addTodo('task 6', 'new description', '2017-03-29', 2, false);
 projects[1].addTodo('task 7', 'new description', '2016-03-30', 2, true);
 
-projects.forEach((project) => {
-  renderProject(project);
+projectContainer.getProjects().forEach((project) => {
+  renderProject(project, projectContainer);
 });
 
 renderMainProject(defaultProject);
