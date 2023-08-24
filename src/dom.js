@@ -190,7 +190,7 @@ function renderItem(item, project) {
         e.clientY < dialogDimensions.top ||
         e.clientY > dialogDimensions.bottom
       ) {
-        dialog.close();
+        dialog.remove();
       }
     });
   });
