@@ -1,34 +1,28 @@
 import './style.css';
 import { projectItem, projectList } from './todo';
-
-// got tired of writing document.document.document.document
-const createElement = (text, type = 'div') => {
-  const element = document.createElement(type);
-  if (text != null) element.textContent = text;
-  return element;
-};
+import { removeTodoItems, loopProject, newElement } from './domHelper';
 
 function renderDetailsDialog(item, project) {
-  const dialog = document.createElement('dialog');
+  const dialog = newElement(null, 'dialog');
   dialog.classList.add('modal-details');
-  dialog.appendChild(createElement(item.getTitle(), 'h1'));
-  dialog.appendChild(createElement(item.getDescription(), 'em'));
-  const title = createElement();
-  const dueDate = createElement();
-  const priority = createElement();
+  dialog.appendChild(newElement(item.getTitle(), 'h1'));
+  dialog.appendChild(newElement(item.getDescription(), 'em'));
+  const title = newElement();
+  const dueDate = newElement();
+  const priority = newElement();
 
-  title.appendChild(createElement('Project:', 'p'));
-  title.appendChild(createElement(project.getTitle(), 'p'));
+  title.appendChild(newElement('Project:', 'p'));
+  title.appendChild(newElement(project.getTitle(), 'p'));
 
-  dueDate.appendChild(createElement('Due date:', 'p'));
-  dueDate.appendChild(createElement(item.getDueDate(), 'p'));
+  dueDate.appendChild(newElement('Due date:', 'p'));
+  dueDate.appendChild(newElement(item.getDueDate(), 'p'));
 
-  priority.appendChild(createElement('Priority:', 'p'));
+  priority.appendChild(newElement('Priority:', 'p'));
   let priorityValue;
   if (item.getPriority() === 0) priorityValue = 'Low';
   if (item.getPriority() === 1) priorityValue = 'Medium';
   if (item.getPriority() === 2) priorityValue = 'High';
-  priority.appendChild(createElement(priorityValue, 'p'));
+  priority.appendChild(newElement(priorityValue, 'p'));
 
   dialog.appendChild(title);
   dialog.appendChild(dueDate);
@@ -36,13 +30,13 @@ function renderDetailsDialog(item, project) {
   return dialog;
 }
 
-function renderEditDialog(item) {
-  const dialog = document.createElement('dialog');
+function renderEditDialog(item, project) {
+  const dialog = newElement(null, 'dialog');
   dialog.classList.add('modal-edit');
 
-  const inputContainer = createElement(null, 'div');
-  const inputTitle = createElement(null, 'input');
-  const inputDescription = createElement(null, 'input');
+  const inputContainer = newElement(null, 'div');
+  const inputTitle = newElement(null, 'input');
+  const inputDescription = newElement(null, 'input');
   inputTitle.setAttribute('type', 'text');
   inputTitle.value = item.getTitle();
   inputDescription.setAttribute('type', 'text');
@@ -51,32 +45,32 @@ function renderEditDialog(item) {
   inputContainer.appendChild(inputDescription);
   dialog.appendChild(inputContainer);
 
-  const dateContainer = createElement(null, 'div');
-  dateContainer.appendChild(createElement('Due Date:', 'p'));
-  const inputDate = createElement(null, 'input');
+  const dateContainer = newElement(null, 'div');
+  dateContainer.appendChild(newElement('Due Date:', 'p'));
+  const inputDate = newElement(null, 'input');
   inputDate.setAttribute('type', 'date');
   inputDate.value = item.getDueDate();
   dateContainer.appendChild(inputDate);
   dialog.appendChild(dateContainer);
 
-  const priorityContainer = createElement(null, 'div');
-  priorityContainer.appendChild(createElement('Priority:', 'p'));
-  const buttonPriorityLow = createElement('Low', 'button');
+  const priorityContainer = newElement(null, 'div');
+  priorityContainer.appendChild(newElement('Priority:', 'p'));
+  const buttonPriorityLow = newElement('Low', 'button');
   buttonPriorityLow.classList.add('button-priority-low');
-  const buttonPriorityMedium = createElement('Medium', 'button');
+  const buttonPriorityMedium = newElement('Medium', 'button');
   buttonPriorityMedium.classList.add('button-priority-medium');
-  const buttonPriorityHigh = createElement('High', 'button');
+  const buttonPriorityHigh = newElement('High', 'button');
   buttonPriorityHigh.classList.add('button-priority-high');
-  const buttonPriorityContainer = createElement(null, 'div');
+  const buttonPriorityContainer = newElement(null, 'div');
   buttonPriorityContainer.appendChild(buttonPriorityLow);
   buttonPriorityContainer.appendChild(buttonPriorityMedium);
   buttonPriorityContainer.appendChild(buttonPriorityHigh);
   priorityContainer.appendChild(buttonPriorityContainer);
   dialog.appendChild(priorityContainer);
 
-  const buttonContainer = createElement(null, 'div');
-  const buttonConfirm = createElement('Confirm', 'button');
-  const buttonCancel = createElement('Cancel', 'button');
+  const buttonContainer = newElement(null, 'div');
+  const buttonConfirm = newElement('Confirm', 'button');
+  const buttonCancel = newElement('Cancel', 'button');
   buttonContainer.appendChild(buttonCancel);
   buttonContainer.appendChild(buttonConfirm);
   dialog.appendChild(buttonContainer);
@@ -137,7 +131,7 @@ function renderEditDialog(item) {
 
 function renderItem(item, project) {
   const mainContainer = document.querySelector('.main-container');
-  const itemContainer = document.createElement('div');
+  const itemContainer = newElement();
   itemContainer.classList.add('todo-item');
   if (item.getPriority() === 0)
     itemContainer.classList.add('task-priority-low');
@@ -146,14 +140,14 @@ function renderItem(item, project) {
   if (item.getPriority() === 2)
     itemContainer.classList.add('task-priority-high');
 
-  const titleContainer = document.createElement('div');
-  const inputCheckMark = document.createElement('input');
-  const itemTitle = document.createElement('p');
-  const infoContainer = document.createElement('div');
-  const detailsButton = document.createElement('button');
-  const dueDate = document.createElement('p');
-  const editButton = document.createElement('button');
-  const deleteButton = document.createElement('button');
+  const titleContainer = newElement();
+  const inputCheckMark = newElement(null, 'input');
+  const itemTitle = newElement(null, 'p');
+  const infoContainer = newElement();
+  const detailsButton = newElement(null, 'button');
+  const dueDate = newElement(null, 'p');
+  const editButton = newElement(null, 'button');
+  const deleteButton = newElement(null, 'button');
 
   inputCheckMark.setAttribute('type', 'checkbox');
   inputCheckMark.checked = item.getStatus();
@@ -185,7 +179,7 @@ function renderItem(item, project) {
     itemTitle.classList.toggle('strikethrough');
     dueDate.classList.toggle('strikethrough');
     itemContainer.classList.toggle('task-priority-null');
-    item.changeStatus();
+    item.switchStatus();
   });
 
   detailsButton.addEventListener('click', () => {
@@ -220,21 +214,14 @@ function renderItem(item, project) {
 
 function renderProject(project) {
   const projectContainer = document.querySelector('#project-container');
-  const projectElement = document.createElement('div');
+  const projectElement = newElement();
   projectElement.classList.add('project-item');
   projectContainer.appendChild(projectElement);
   projectElement.textContent = project.getTitle();
 
   projectElement.addEventListener('click', () => {
-    const todoItems = document.querySelectorAll('.todo-item');
-    if (todoItems != null) {
-      todoItems.forEach((item) => {
-        item.remove();
-      });
-    }
-    project.getTodos().forEach((item) => {
-      renderItem(item, project);
-    });
+    removeTodoItems();
+    loopProject(project, renderItem);
   });
 }
 
@@ -244,19 +231,10 @@ function renderAllItems(mainProject, otherProjects) {
   );
 
   mainProjectContainer.addEventListener('click', () => {
-    const todoItems = document.querySelectorAll('.todo-item');
-    if (todoItems != null) {
-      todoItems.forEach((item) => {
-        item.remove();
-      });
-    }
-    mainProject.getTodos().forEach((item) => {
-      renderItem(item, mainProject);
-    });
+    removeTodoItems();
+    loopProject(mainProject, renderItem);
     otherProjects.forEach((project) => {
-      project.getTodos().forEach((item) => {
-        renderItem(item, project);
-      });
+      loopProject(project, renderItem);
     });
   });
 }
@@ -266,22 +244,22 @@ function renderAllItems(mainProject, otherProjects) {
 // default project will always be present
 // it's where to-dos not linked to any project will go
 const defaultProject = projectItem('default project');
-defaultProject.addTodo('one', 'description', '01/01', 0, false);
-defaultProject.addTodo('two', 'description', '02/02', 1, true);
-defaultProject.addTodo('three', 'description', '03/03', 2, false);
+defaultProject.addTodo('one', 'description', '1997-06-21', 0, false);
+defaultProject.addTodo('two', 'description', '1995-02-15', 1, true);
+defaultProject.addTodo('three', 'description', '1989-05-04', 2, false);
 
 const projectContainer = projectList();
 const projects = projectContainer.getProjects();
 projectContainer.addProject('new project');
 projectContainer.addProject('another project');
-projects[0].addTodo('task 0', 'new description', 'new due date', 0, true);
-projects[0].addTodo('task 1', 'new description', 'new due date', 1, true);
-projects[0].addTodo('task 2', 'new description', 'new due date', 2, true);
-projects[0].addTodo('task 3', 'new description', 'new due date', 2, true);
-projects[1].addTodo('task 4', 'new description', 'new due date', 0, true);
-projects[1].addTodo('task 5', 'new description', 'new due date', 1, true);
-projects[1].addTodo('task 6', 'new description', 'new due date', 2, true);
-projects[1].addTodo('task 7', 'new description', 'new due date', 2, true);
+projects[0].addTodo('task 0', 'new description', '2023-08-23', 0, false);
+projects[0].addTodo('task 1', 'new description', '2022-07-24', 1, false);
+projects[0].addTodo('task 2', 'new description', '2021-06-25', 2, false);
+projects[0].addTodo('task 3', 'new description', '2020-05-26', 2, true);
+projects[1].addTodo('task 4', 'new description', '2019-04-27', 0, false);
+projects[1].addTodo('task 5', 'new description', '2018-03-28', 1, false);
+projects[1].addTodo('task 6', 'new description', '2017-03-29', 2, false);
+projects[1].addTodo('task 7', 'new description', '2016-03-30', 2, true);
 
 projects.forEach((project) => {
   renderProject(project);
