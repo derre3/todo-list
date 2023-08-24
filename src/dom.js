@@ -121,8 +121,7 @@ function renderEditDialog(item, project) {
     item.setDescription(inputDescription.value);
     item.setDueDate(inputDate.value);
     item.setPriority(priorityValue);
-    removeTodoItems();
-    loopProject(project, renderItem);
+    refreshItems(project);
     dialog.remove();
   });
 
@@ -224,8 +223,7 @@ function renderProject(project, projectCollection) {
   projectElement.appendChild(removeButton);
 
   projectTitle.addEventListener('click', () => {
-    removeTodoItems();
-    loopProject(project, renderItem);
+    refreshItems(project);
   });
 
   removeButton.addEventListener('click', () => {
@@ -243,8 +241,7 @@ function renderMainProject(mainProject) {
   );
 
   mainProjectContainer.addEventListener('click', () => {
-    removeTodoItems();
-    loopProject(mainProject, renderItem);
+    refreshItems(project);
   });
 }
 
