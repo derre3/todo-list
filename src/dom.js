@@ -119,7 +119,17 @@ function renderEditDialog(item) {
   });
 
   buttonCancel.addEventListener('click', () => {
-    dialog.close();
+    dialog.remove();
+  });
+  // WIP
+  buttonConfirm.addEventListener('click', () => {
+    item.setTitle(inputTitle.value);
+    item.setDescription(inputDescription.value);
+    item.setDueDate(inputDate.value);
+    item.setPriority(priorityValue);
+    removeTodoItems();
+    loopProject(project, renderItem);
+    dialog.remove();
   });
 
   return dialog;
