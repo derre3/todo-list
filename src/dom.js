@@ -351,13 +351,46 @@ function renderMainProject(project) {
   mainProjectContainer.click();
 }
 
+function newProjectDialog(projectCollection) {
+  const dialog = newElement(null, 'dialog');
+  dialog.classList.add('modal-input');
+
+  dialog.appendChild(newElement('New Project', 'h2'));
+
+  const inputTitle = newElement(null, 'input');
+  inputTitle.setAttribute('placeholder', 'Project Title');
+  dialog.appendChild(inputTitle);
+
+  const buttonContainer = newElement(null, 'div');
+  const buttonConfirm = newElement('Confirm', 'button');
+  const buttonCancel = newElement('Cancel', 'button');
+  buttonContainer.appendChild(buttonCancel);
+  buttonContainer.appendChild(buttonConfirm);
+  dialog.appendChild(buttonContainer);
+
+  buttonCancel.addEventListener('click', () => {
+    dialog.remove();
+  });
+
+  buttonConfirm.addEventListener('click', () => {
+    if (inputTitle.value === '') inputTitle.value = 'New Project';
+
+    projectCollection.addProject(inputTitle.value);
+    const index = projectCollection.getProjects().length - 1;
+    renderProject(projectCollection.getProjects(index), projectCollection);
+    dialog.remove();
+  });
+
+  return dialog;
+}
+
 function newProject(projectCollection) {
   const addButton = document.querySelector('#add-button');
   addButton.addEventListener('click', () => {
-    // TODO dialog for project title input
-    projectCollection.addProject('New Project');
-    const index = projectCollection.getProjects().length - 1;
-    renderProject(projectCollection.getProjects(index), projectCollection);
+    const mainContainer = document.querySelector('.main-container');
+    const dialog = newProjectDialog(projectCollection);
+    mainContainer.appendChild(dialog);
+    dialog.showModal();
   });
 }
 
