@@ -212,6 +212,96 @@ function renderItem(item, project) {
   });
 }
 
+function todoDialog(project) {
+  const dialog = newElement(null, 'dialog');
+  dialog.classList.add('modal-input');
+
+  const inputContainer = newElement(null, 'div');
+  const inputTitle = newElement(null, 'input');
+  const inputDescription = newElement(null, 'input');
+  inputTitle.setAttribute('type', 'text');
+  inputDescription.setAttribute('type', 'text');
+  inputContainer.appendChild(inputTitle);
+  inputContainer.appendChild(inputDescription);
+  dialog.appendChild(inputContainer);
+
+  const dateContainer = newElement(null, 'div');
+  dateContainer.appendChild(newElement('Due Date:', 'p'));
+  const inputDate = newElement(null, 'input');
+  inputDate.setAttribute('type', 'date');
+  dateContainer.appendChild(inputDate);
+  dialog.appendChild(dateContainer);
+
+  const priorityContainer = newElement(null, 'div');
+  priorityContainer.appendChild(newElement('Priority:', 'p'));
+  const buttonPriorityLow = newElement('Low', 'button');
+  buttonPriorityLow.classList.add('button-priority-low');
+  const buttonPriorityMedium = newElement('Medium', 'button');
+  buttonPriorityMedium.classList.add('button-priority-medium');
+  const buttonPriorityHigh = newElement('High', 'button');
+  buttonPriorityHigh.classList.add('button-priority-high');
+  const buttonPriorityContainer = newElement(null, 'div');
+  buttonPriorityContainer.appendChild(buttonPriorityLow);
+  buttonPriorityContainer.appendChild(buttonPriorityMedium);
+  buttonPriorityContainer.appendChild(buttonPriorityHigh);
+  priorityContainer.appendChild(buttonPriorityContainer);
+  dialog.appendChild(priorityContainer);
+
+  const buttonContainer = newElement(null, 'div');
+  const buttonConfirm = newElement('Confirm', 'button');
+  const buttonCancel = newElement('Cancel', 'button');
+  buttonContainer.appendChild(buttonCancel);
+  buttonContainer.appendChild(buttonConfirm);
+  dialog.appendChild(buttonContainer);
+
+  const resetPriorityButton = () => {
+    Array.from(buttonPriorityContainer.children).forEach((button) => {
+      button.classList.remove('button-priority-null');
+      button.classList.add('button-priority-null');
+    });
+  };
+
+  let priorityValue = 0;
+  resetPriorityButton();
+  buttonPriorityLow.classList.remove('button-priority-null');
+
+  buttonPriorityLow.addEventListener('click', () => {
+    priorityValue = 0;
+    resetPriorityButton();
+    buttonPriorityLow.classList.toggle('button-priority-null');
+  });
+  buttonPriorityMedium.addEventListener('click', () => {
+    priorityValue = 1;
+    resetPriorityButton();
+    buttonPriorityMedium.classList.toggle('button-priority-null');
+  });
+  buttonPriorityHigh.addEventListener('click', () => {
+    priorityValue = 2;
+    resetPriorityButton();
+    buttonPriorityHigh.classList.toggle('button-priority-null');
+  });
+
+  buttonCancel.addEventListener('click', () => {
+    dialog.remove();
+  });
+  // WIP
+  buttonConfirm.addEventListener('click', () => {
+    if (inputTitle.value === '') inputTitle.value = 'New task';
+
+    project.addTodo(
+      inputTitle.value,
+      inputDescription.value,
+      inputDate.value,
+      priorityValue,
+      false
+    );
+    dialog.remove();
+    refreshItems(project);
+  });
+
+  return dialog;
+}
+
 function renderNewTodoButton(project) {
   const mainContainer = document.querySelector('.main-container');
   const button = newElement('New Task', 'button');
@@ -219,9 +309,9 @@ function renderNewTodoButton(project) {
   button.id = 'new-todo';
 
   button.addEventListener('click', () => {
-    // placeholder for testing
-    project.addTodo('New Task', '', new Date().getFullYear(), 0, false);
-    refreshItems(project);
+    const dialog = todoDialog(project);
+    mainContainer.appendChild(dialog);
+    dialog.showModal();
   });
 }
 
