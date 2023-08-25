@@ -219,6 +219,7 @@ function todoDialog(project) {
   const inputContainer = newElement(null, 'div');
   const inputTitle = newElement(null, 'input');
   const inputDescription = newElement(null, 'input');
+  inputDescription.setAttribute('placeholder', 'Description');
   inputTitle.setAttribute('type', 'text');
   inputDescription.setAttribute('type', 'text');
   inputContainer.appendChild(inputTitle);
