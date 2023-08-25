@@ -58,7 +58,9 @@ header {
   display: flex;
 }
 
-.project-item button {
+.project-item > div {
+  display: flex;
+  gap: 12px;
   margin-left: auto;
 }
 

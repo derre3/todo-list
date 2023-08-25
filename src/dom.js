@@ -316,18 +316,54 @@ function renderNewTodoButton(project) {
   });
 }
 
+function editProjectDialog(project, currentTitle) {
+  const dialog = newElement(null, 'dialog');
+  dialog.classList.add('modal-input');
+  dialog.appendChild(newElement('New Project', 'h2'));
+  const inputTitle = newElement(null, 'input');
+  inputTitle.value = project.getTitle();
+  inputTitle.setAttribute('placeholder', 'Project Title');
+  dialog.appendChild(inputTitle);
+
+  const buttonContainer = newElement(null, 'div');
+  const buttonConfirm = newElement('Confirm', 'button');
+  const buttonCancel = newElement('Cancel', 'button');
+  buttonContainer.appendChild(buttonCancel);
+  buttonContainer.appendChild(buttonConfirm);
+  dialog.appendChild(buttonContainer);
+
+  buttonCancel.addEventListener('click', () => {
+    dialog.remove();
+  });
+
+  buttonConfirm.addEventListener('click', () => {
+    if (inputTitle.value === '') inputTitle.value = 'Project';
+
+    // eslint-disable-next-line no-param-reassign
+    currentTitle.textContent = inputTitle.value;
+    project.setTitle(inputTitle.value);
+    dialog.remove();
+    refreshItems(project);
+  });
+
+  return dialog;
+}
+
 function renderProject(project, projectCollection) {
   const projectContainer = document.querySelector('#project-container');
   const projectElement = newElement();
   projectElement.classList.add('project-item');
   projectContainer.appendChild(projectElement);
-  const projectTitle = newElement(project.getTitle(), 'p');
+  const title = newElement(project.getTitle(), 'p');
   const removeButton = newElement('remove', 'button');
+  const editButton = newElement('edit', 'button');
+  projectElement.appendChild(title);
+  const buttonContainer = newElement();
+  buttonContainer.appendChild(editButton);
+  buttonContainer.appendChild(removeButton);
+  projectElement.appendChild(buttonContainer);
 
-  projectElement.appendChild(projectTitle);
-  projectElement.appendChild(removeButton);
-
-  projectTitle.addEventListener('click', () => {
+  title.addEventListener('click', () => {
     refreshItems(project);
   });
 
@@ -337,6 +373,12 @@ function renderProject(project, projectCollection) {
     mainProject.click();
     const index = Array.from(projectCollection.getProjects().indexOf(project));
     projectCollection.removeProject(index);
+  });
+  editButton.addEventListener('click', () => {
+    const dialog = editProjectDialog(project, title);
+    const mainContainer = document.querySelector('.main-container');
+    mainContainer.appendChild(dialog);
+    dialog.showModal();
   });
 }
 
@@ -423,6 +465,6 @@ function initPage(blankMode = true) {
   });
 }
 
-initPage();
+initPage(false);
 
 export { renderNewTodoButton, renderItem };

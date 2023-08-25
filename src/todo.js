@@ -48,6 +48,9 @@ const todoItem = (title, description, dueDate, priority, status) => {
 // items is an array containing the to-do items
 const projectItem = (projectTitle, items = []) => {
   const getTitle = () => projectTitle;
+  const setTitle = (value) => {
+    projectTitle = value;
+  };
   const getTodos = (index) => {
     // the index of the array can be accessed directly
     // through the function in case it's not stored
@@ -66,6 +69,7 @@ const projectItem = (projectTitle, items = []) => {
 
   return {
     getTitle,
+    setTitle,
     getTodos,
     addTodo,
     removeTodo,
