@@ -33,15 +33,13 @@ function renderDetailsDialog(item, project) {
 
 function renderEditDialog(item, project) {
   const dialog = newElement(null, 'dialog');
-  dialog.classList.add('modal-edit');
+  dialog.classList.add('modal-input');
 
   const inputContainer = newElement(null, 'div');
   const inputTitle = newElement(null, 'input');
   const inputDescription = newElement(null, 'input');
   inputTitle.setAttribute('type', 'text');
-  inputTitle.value = item.getTitle();
   inputDescription.setAttribute('type', 'text');
-  inputDescription.value = item.getDescription();
   inputContainer.appendChild(inputTitle);
   inputContainer.appendChild(inputDescription);
   dialog.appendChild(inputContainer);
@@ -50,7 +48,6 @@ function renderEditDialog(item, project) {
   dateContainer.appendChild(newElement('Due Date:', 'p'));
   const inputDate = newElement(null, 'input');
   inputDate.setAttribute('type', 'date');
-  inputDate.value = item.getDueDate();
   dateContainer.appendChild(inputDate);
   dialog.appendChild(dateContainer);
 
@@ -76,6 +73,11 @@ function renderEditDialog(item, project) {
   buttonContainer.appendChild(buttonConfirm);
   dialog.appendChild(buttonContainer);
 
+  inputTitle.value = item.getTitle();
+  inputDescription.value = item.getDescription();
+  inputDate.value = item.getDueDate();
+  let priorityValue = item.getPriority();
+
   const resetPriorityButton = () => {
     Array.from(buttonPriorityContainer.children).forEach((button) => {
       button.classList.remove('button-priority-null');
@@ -83,7 +85,6 @@ function renderEditDialog(item, project) {
     });
   };
 
-  let priorityValue = item.getPriority();
   if (priorityValue === 0) {
     resetPriorityButton();
     buttonPriorityLow.classList.toggle('button-priority-null');
@@ -116,7 +117,6 @@ function renderEditDialog(item, project) {
   buttonCancel.addEventListener('click', () => {
     dialog.remove();
   });
-  // WIP
   buttonConfirm.addEventListener('click', () => {
     item.setTitle(inputTitle.value);
     item.setDescription(inputDescription.value);
@@ -218,6 +218,7 @@ function todoDialog(project) {
 
   const inputContainer = newElement(null, 'div');
   const inputTitle = newElement(null, 'input');
+  inputTitle.setAttribute('placeholder', 'Title');
   const inputDescription = newElement(null, 'input');
   inputDescription.setAttribute('placeholder', 'Description');
   inputTitle.setAttribute('type', 'text');
@@ -285,7 +286,6 @@ function todoDialog(project) {
   buttonCancel.addEventListener('click', () => {
     dialog.remove();
   });
-  // WIP
   buttonConfirm.addEventListener('click', () => {
     if (inputTitle.value === '') inputTitle.value = 'New task';
 
@@ -305,7 +305,7 @@ function todoDialog(project) {
 
 function renderNewTodoButton(project) {
   const mainContainer = document.querySelector('.main-container');
-  const button = newElement('New Task', 'button');
+  const button = newElement(`Add new Task to ${project.getTitle()}`, 'button');
   mainContainer.appendChild(button);
   button.id = 'new-todo';
 
@@ -351,9 +351,10 @@ function renderMainProject(project) {
   mainProjectContainer.click();
 }
 
-function startProject(projectCollection) {
+function newProject(projectCollection) {
   const addButton = document.querySelector('#add-button');
   addButton.addEventListener('click', () => {
+    // TODO dialog for project title input
     projectCollection.addProject('New Project');
     const index = projectCollection.getProjects().length - 1;
     renderProject(projectCollection.getProjects(index), projectCollection);
@@ -362,8 +363,8 @@ function startProject(projectCollection) {
 
 function initPage(blankMode = true) {
   if (blankMode === true) {
-    renderMainProject(projectItem('home'));
-    startProject(projectList());
+    renderMainProject(projectItem('Home'));
+    newProject(projectList());
     return;
   }
   const defaultProject = projectItem('default project');
