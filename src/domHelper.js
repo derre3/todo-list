@@ -30,4 +30,26 @@ function newElement(text, type = 'div') {
   return element;
 }
 
-export { newElement, refreshItems };
+function resetPriorityButton(button) {
+  Array.from(button.children).forEach((children) => {
+    children.classList.remove('button-priority-null');
+    children.classList.add('button-priority-null');
+  });
+}
+
+function checkPriority(priority, buttonContainer, button) {
+  if (priority === 0) {
+    resetPriorityButton(buttonContainer);
+    button[0].classList.toggle('button-priority-null');
+  }
+  if (priority === 1) {
+    resetPriorityButton(buttonContainer);
+    button[1].classList.toggle('button-priority-null');
+  }
+  if (priority === 2) {
+    resetPriorityButton(buttonContainer);
+    button[2].classList.toggle('button-priority-null');
+  }
+}
+
+export { newElement, refreshItems, resetPriorityButton, checkPriority };
