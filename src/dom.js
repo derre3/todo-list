@@ -436,35 +436,11 @@ function newProject(projectCollection) {
   });
 }
 
-function initPage(blankMode = true) {
-  if (blankMode === true) {
-    renderMainProject(projectItem('Home'));
-    newProject(projectList());
-    return;
-  }
-  const defaultProject = projectItem('default project');
-  defaultProject.addTodo('one', 'description', '1997-06-21', 0, false);
-  defaultProject.addTodo('two', 'description', '1995-02-15', 1, true);
-  defaultProject.addTodo('three', 'description', '1989-05-04', 2, false);
-  const projectContainer = projectList();
-  const projects = projectContainer.getProjects();
-  projectContainer.addProject('new project');
-  projectContainer.addProject('another project');
-  projects[0].addTodo('task 0', 'new description', '2023-08-23', 0, false);
-  projects[0].addTodo('task 1', 'new description', '2022-07-24', 1, false);
-  projects[0].addTodo('task 2', 'new description', '2021-06-25', 2, false);
-  projects[0].addTodo('task 3', 'new description', '2020-05-26', 2, true);
-  projects[1].addTodo('task 4', 'new description', '2019-04-27', 0, false);
-  projects[1].addTodo('task 5', 'new description', '2018-03-28', 1, false);
-  projects[1].addTodo('task 6', 'new description', '2017-03-29', 2, false);
-  projects[1].addTodo('task 7', 'new description', '2016-03-30', 2, true);
-
-  renderMainProject(defaultProject);
-  projectContainer.getProjects().forEach((project) => {
-    renderProject(project, projectContainer);
-  });
+function initPage() {
+  renderMainProject(projectItem('Home'));
+  newProject(projectList());
 }
 
-initPage(false);
+initPage();
 
 export { renderNewTodoButton, renderItem };
