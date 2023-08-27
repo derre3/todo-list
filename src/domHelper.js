@@ -52,4 +52,25 @@ function checkPriority(priority, buttonContainer, button) {
   }
 }
 
-export { newElement, refreshItems, resetPriorityButton, checkPriority };
+function isTodoDone(inputCheckMark, itemTitle, dueDate, itemContainer) {
+  if (inputCheckMark.checked) {
+    itemTitle.classList.add('strikethrough');
+    dueDate.classList.add('strikethrough');
+    itemContainer.classList.add('task-priority-null');
+  }
+}
+
+function setTodoPriorityClass(priorityValue, itemContainer) {
+  if (priorityValue === 0) itemContainer.classList.add('task-priority-low');
+  if (priorityValue === 1) itemContainer.classList.add('task-priority-medium');
+  if (priorityValue === 2) itemContainer.classList.add('task-priority-high');
+}
+
+export {
+  newElement,
+  refreshItems,
+  resetPriorityButton,
+  checkPriority,
+  setTodoPriorityClass,
+  isTodoDone,
+};
