@@ -6,6 +6,8 @@ import {
   refreshItems,
   resetPriorityButton,
   checkPriority,
+  setTodoPriorityClass,
+  isTodoDone,
 } from './domHelper';
 
 function renderDetailsDialog(item, project) {
@@ -89,6 +91,7 @@ function renderEditDialog(item, project) {
   inputDescription.value = item.getDescription();
   inputDate.value = item.getDueDate();
 
+  // checks
   checkPriority(priorityValue, buttonPriorityContainer, buttonPriority);
 
   // Listeners
@@ -123,6 +126,7 @@ function renderEditDialog(item, project) {
 }
 
 function renderItem(item, project) {
+  // declarations
   const mainContainer = document.querySelector('.main-container');
   const itemContainer = newElement();
   const titleContainer = newElement();
@@ -133,51 +137,43 @@ function renderItem(item, project) {
   const dueDate = newElement(null, 'p');
   const editButton = newElement(null, 'button');
   const deleteButton = newElement(null, 'button');
+  const priorityValue = item.getPriority();
 
+  // appends
+  mainContainer.appendChild(itemContainer);
+  itemContainer.append(titleContainer, infoContainer);
+  titleContainer.append(inputCheckMark, itemTitle);
+  infoContainer.append(
+    detailsButton,
+    dueDate,
+    dueDate,
+    editButton,
+    deleteButton
+  );
+
+  // data
   itemContainer.classList.add('todo-item');
-  if (item.getPriority() === 0)
-    itemContainer.classList.add('task-priority-low');
-  if (item.getPriority() === 1)
-    itemContainer.classList.add('task-priority-medium');
-  if (item.getPriority() === 2)
-    itemContainer.classList.add('task-priority-high');
-
   inputCheckMark.setAttribute('type', 'checkbox');
   inputCheckMark.checked = item.getStatus();
-  if (inputCheckMark.checked) {
-    itemTitle.classList.add('strikethrough');
-    dueDate.classList.add('strikethrough');
-    itemContainer.classList.add('task-priority-null');
-  }
-
   itemTitle.textContent = item.getTitle();
   detailsButton.textContent = 'Details';
   dueDate.textContent = item.getDueDate();
   editButton.textContent = 'Edit';
   deleteButton.textContent = 'Delete';
 
-  mainContainer.appendChild(itemContainer);
-  itemContainer.appendChild(titleContainer);
-  itemContainer.appendChild(infoContainer);
+  // Checks
+  setTodoPriorityClass(priorityValue, itemContainer);
+  isTodoDone(inputCheckMark, itemTitle, dueDate, itemContainer);
 
-  titleContainer.appendChild(inputCheckMark);
-  titleContainer.appendChild(itemTitle);
-
-  infoContainer.appendChild(detailsButton);
-  infoContainer.appendChild(dueDate);
-  infoContainer.appendChild(editButton);
-  infoContainer.appendChild(deleteButton);
-
+  // Listeners
   inputCheckMark.addEventListener('click', () => {
     itemTitle.classList.toggle('strikethrough');
     dueDate.classList.toggle('strikethrough');
     itemContainer.classList.toggle('task-priority-null');
     item.switchStatus();
   });
-
   detailsButton.addEventListener('click', () => {
     const dialog = renderDetailsDialog(item, project);
-
     itemContainer.appendChild(dialog);
     dialog.showModal();
     dialog.addEventListener('click', (e) => {
@@ -192,17 +188,13 @@ function renderItem(item, project) {
       }
     });
   });
-
   editButton.addEventListener('click', () => {
     const dialog = renderEditDialog(item, project);
-
     itemContainer.appendChild(dialog);
     dialog.showModal();
   });
-
   deleteButton.addEventListener('click', () => {
     const index = Array.from(project.getTodos()).indexOf(item);
-
     itemContainer.remove();
     project.removeTodo(index);
   });
