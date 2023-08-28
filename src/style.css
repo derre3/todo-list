@@ -198,13 +198,22 @@ dialog h2 {
   background-color: #a8a8a8;
   border: 2px solid #a8a8a8;
 }
+.button-priority-low:hover {
+  background-color: #a8a8a8;
+}
 .button-priority-medium {
   background-color: #f2d73b;
   border: 2px solid #f2d73b;
 }
+.button-priority-medium:hover {
+  background-color: #f2d73b;
+}
 .button-priority-high {
   background-color: #d90000;
   border: 2px solid #d90000;
+}
+.button-priority-high:hover {
+  background-color: #d90000;
 }
 .button-priority-null {
   background-color: transparent;
