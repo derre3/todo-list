@@ -201,6 +201,7 @@ function renderItem(item, project) {
 }
 
 function todoDialog(project) {
+  // declarations
   const dialog = newElement(null, 'dialog');
   const inputContainer = newElement(null, 'div');
   const inputTitle = newElement(null, 'input');
@@ -208,66 +209,72 @@ function todoDialog(project) {
   const dateContainer = newElement(null, 'div');
   const inputDate = newElement(null, 'input');
   const priorityContainer = newElement(null, 'div');
-  const buttonPriorityLow = newElement('Low', 'button');
-  const buttonPriorityMedium = newElement('Medium', 'button');
-  const buttonPriorityHigh = newElement('High', 'button');
+  const buttonPriority = [
+    newElement('Low', 'button'),
+    newElement('Medium', 'button'),
+    newElement('High', 'button'),
+  ];
   const buttonPriorityContainer = newElement(null, 'div');
   const buttonContainer = newElement(null, 'div');
   const buttonConfirm = newElement('Confirm', 'button');
   const buttonCancel = newElement('Cancel', 'button');
+  let priorityValue = 0;
 
+  // appends
+  inputContainer.append(inputTitle, inputDescription);
+  dateContainer.append(newElement('Due Date:', 'p'), inputDate);
+  dialog.append(
+    inputContainer,
+    dateContainer,
+    priorityContainer,
+    buttonContainer
+  );
+  buttonPriorityContainer.append(
+    buttonPriority[0],
+    buttonPriority[1],
+    buttonPriority[2]
+  );
+  priorityContainer.append(
+    newElement('Priority:', 'p'),
+    buttonPriorityContainer
+  );
+  buttonContainer.append(buttonCancel, buttonConfirm);
+
+  // data
   dialog.classList.add('modal-input');
   inputTitle.setAttribute('placeholder', 'Title');
   inputDescription.setAttribute('placeholder', 'Description');
   inputTitle.setAttribute('type', 'text');
   inputDescription.setAttribute('type', 'text');
-  inputContainer.appendChild(inputTitle);
-  inputContainer.appendChild(inputDescription);
-  dialog.appendChild(inputContainer);
-  dateContainer.appendChild(newElement('Due Date:', 'p'));
   inputDate.setAttribute('type', 'date');
-  dateContainer.appendChild(inputDate);
-  dialog.appendChild(dateContainer);
-  priorityContainer.appendChild(newElement('Priority:', 'p'));
-  buttonPriorityLow.classList.add('button-priority-low');
-  buttonPriorityMedium.classList.add('button-priority-medium');
-  buttonPriorityHigh.classList.add('button-priority-high');
-  buttonPriorityContainer.appendChild(buttonPriorityLow);
-  buttonPriorityContainer.appendChild(buttonPriorityMedium);
-  buttonPriorityContainer.appendChild(buttonPriorityHigh);
-  priorityContainer.appendChild(buttonPriorityContainer);
-  dialog.appendChild(priorityContainer);
+  buttonPriority[0].classList.add('button-priority-low');
+  buttonPriority[1].classList.add('button-priority-medium');
+  buttonPriority[2].classList.add('button-priority-high');
 
-  buttonContainer.appendChild(buttonCancel);
-  buttonContainer.appendChild(buttonConfirm);
-  dialog.appendChild(buttonContainer);
-
-  let priorityValue = 0;
   resetPriorityButton(buttonPriorityContainer);
-  buttonPriorityLow.classList.remove('button-priority-null');
+  buttonPriority[0].classList.remove('button-priority-null');
 
-  buttonPriorityLow.addEventListener('click', () => {
+  // listeners
+  buttonPriority[0].addEventListener('click', () => {
     priorityValue = 0;
     resetPriorityButton(buttonPriorityContainer);
-    buttonPriorityLow.classList.toggle('button-priority-null');
+    buttonPriority[0].classList.toggle('button-priority-null');
   });
-  buttonPriorityMedium.addEventListener('click', () => {
+  buttonPriority[1].addEventListener('click', () => {
     priorityValue = 1;
     resetPriorityButton(buttonPriorityContainer);
-    buttonPriorityMedium.classList.toggle('button-priority-null');
+    buttonPriority[1].classList.toggle('button-priority-null');
   });
-  buttonPriorityHigh.addEventListener('click', () => {
+  buttonPriority[2].addEventListener('click', () => {
     priorityValue = 2;
     resetPriorityButton(buttonPriorityContainer);
-    buttonPriorityHigh.classList.toggle('button-priority-null');
+    buttonPriority[2].classList.toggle('button-priority-null');
   });
-
   buttonCancel.addEventListener('click', () => {
     dialog.remove();
   });
   buttonConfirm.addEventListener('click', () => {
     if (inputTitle.value === '') inputTitle.value = 'New task';
-
     project.addTodo(
       inputTitle.value,
       inputDescription.value,
