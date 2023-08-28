@@ -49,9 +49,9 @@ function renderEditDialog(item, project) {
   const inputDate = newElement(null, 'input');
   const priorityContainer = newElement(null, 'div');
   const buttonPriority = [
-    newElement('Low', 'button'),
-    newElement('Medium', 'button'),
-    newElement('High', 'button'),
+    newElement('', 'button'),
+    newElement('', 'button'),
+    newElement('', 'button'),
   ];
   const buttonPriorityContainer = newElement(null, 'div');
   const buttonContainer = newElement(null, 'div');
@@ -90,6 +90,7 @@ function renderEditDialog(item, project) {
   inputTitle.value = item.getTitle();
   inputDescription.value = item.getDescription();
   inputDate.value = item.getDueDate();
+  buttonContainer.classList.add('button-container');
 
   // checks
   checkPriority(priorityValue, buttonPriorityContainer, buttonPriority);
@@ -190,7 +191,7 @@ function renderItem(item, project) {
   });
   editButton.addEventListener('click', () => {
     const dialog = renderEditDialog(item, project);
-    itemContainer.appendChild(dialog);
+    mainContainer.appendChild(dialog);
     dialog.showModal();
   });
   deleteButton.addEventListener('click', () => {
@@ -210,9 +211,9 @@ function todoDialog(project) {
   const inputDate = newElement(null, 'input');
   const priorityContainer = newElement(null, 'div');
   const buttonPriority = [
-    newElement('Low', 'button'),
-    newElement('Medium', 'button'),
-    newElement('High', 'button'),
+    newElement('', 'button'),
+    newElement('', 'button'),
+    newElement('', 'button'),
   ];
   const buttonPriorityContainer = newElement(null, 'div');
   const buttonContainer = newElement(null, 'div');
@@ -250,6 +251,7 @@ function todoDialog(project) {
   buttonPriority[0].classList.add('button-priority-low');
   buttonPriority[1].classList.add('button-priority-medium');
   buttonPriority[2].classList.add('button-priority-high');
+  buttonContainer.classList.add('button-container');
 
   resetPriorityButton(buttonPriorityContainer);
   buttonPriority[0].classList.remove('button-priority-null');
@@ -312,8 +314,9 @@ function editProjectDialog(project, currentTitle) {
   const buttonCancel = newElement('Cancel', 'button');
 
   dialog.classList.add('modal-input');
-  dialog.appendChild(newElement('New Project', 'h2'));
+  dialog.appendChild(newElement('Edit Project', 'h2'));
   inputTitle.value = project.getTitle();
+  inputTitle.setAttribute('type', 'text');
   inputTitle.setAttribute('placeholder', 'Project Title');
   dialog.appendChild(inputTitle);
   buttonContainer.appendChild(buttonCancel);
@@ -393,11 +396,13 @@ function newProjectDialog(projectCollection) {
 
   dialog.classList.add('modal-input');
   dialog.appendChild(newElement('New Project', 'h2'));
+  inputTitle.setAttribute('type', 'text');
   inputTitle.setAttribute('placeholder', 'Project Title');
   dialog.appendChild(inputTitle);
   buttonContainer.appendChild(buttonCancel);
   buttonContainer.appendChild(buttonConfirm);
   dialog.appendChild(buttonContainer);
+  buttonContainer.classList.add('button-container');
 
   buttonCancel.addEventListener('click', () => {
     dialog.remove();
