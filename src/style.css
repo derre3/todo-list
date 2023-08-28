@@ -232,6 +232,10 @@ dialog h2 {
   background-color: #f1f1f1;
 }
 
+.modal-input input::placeholder {
+  color: #b3b3b3;
+}
+
 .modal-input input:focus-visible {
   background-color: #f6f6f6;
 }
