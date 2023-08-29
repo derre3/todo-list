@@ -20,6 +20,17 @@ body button {
   cursor: pointer;
 }
 
+#svg-logo {
+  display: inline;
+  width: 2rem;
+  height: 2rem;
+}
+
+.svg-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
 #content {
   display: grid;
   grid-template-columns: 1fr 3fr;
@@ -31,10 +42,14 @@ body button {
 }
 
 header {
+  display: flex;
   grid-area: header;
-  background-color: #a038f6;
+  background-color: #8a45c3;
   color: white;
   padding: 2rem;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: flex-start;
 }
 
 .main-project-container {
@@ -42,19 +57,35 @@ header {
   gap: 0.7rem;
 }
 
-.project-item > p,
-.main-project-container > h3 {
+.svg-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#home,
+.project-title {
+  cursor: pointer;
   position: relative;
 }
 
-.project-item > p:hover::before,
-.main-project-container > h3:hover::before {
+.project-title::before,
+#home::before {
   position: absolute;
   content: '';
-  height: 3px;
+  height: 2px;
   width: 100%;
   bottom: 0;
+  border-radius: 50%;
   background-color: black;
+  scale: 0 1;
+  transition: scale 200ms;
+}
+
+.project-title:hover::before,
+#home:hover::before {
+  scale: 1 1;
+  transition: scale 200ms;
 }
 
 .sidebar {
@@ -64,28 +95,25 @@ header {
   gap: 1rem;
   justify-content: flex-start;
   background-color: #e9e9e9;
-  padding: 3rem;
-  border: 1px solid #a8a8a8;
+  padding: 2rem;
   font-size: 1.5rem;
 }
 
 .project-item {
   display: flex;
+  padding-left: 0.5rem;
+  margin-top: 0.5rem;
 }
 
-.project-item > div {
+.project-item > div:nth-child(2) {
   display: flex;
-  gap: 12px;
+  gap: 6px;
   margin-left: auto;
-}
-
-.sidebar .project-item {
-  padding-left: 1rem;
 }
 
 #add-button {
   position: sticky;
-  bottom: 3rem;
+  bottom: 2rem;
   border: none;
   margin-top: auto;
   align-self: flex-start;
@@ -93,8 +121,14 @@ header {
   width: 70px;
   height: 70px;
   font-size: 3rem;
-  background-color: #a038f6;
+  background-color: #8a45c3;
   color: #e9e9e9;
+  transition: rotate 333ms;
+}
+
+#add-button:hover {
+  rotate: 90deg;
+  transition: rotate 200ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 
 .main-container {
@@ -102,14 +136,31 @@ header {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background-color: #e9e9e9;
-  border: 1px solid #a8a8a8;
+  background-color: #ffffff;
   padding: 2rem;
 }
 
 #new-todo {
-  background-color: red;
+  position: sticky;
+  top: 1rem;
+  background-color: #8a45c3;
+  color: #ffffff;
+  border-radius: 20px;
+  width: 250px;
+  height: 33px;
   align-self: center;
+  z-index: 10;
+  transition:
+    box-shadow 300ms,
+    translate 200ms;
+}
+
+#new-todo:hover {
+  translate: 0 -3px;
+  box-shadow: 4px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition:
+    box-shadow 300ms,
+    translate 200ms;
 }
 
 .todo-item {
@@ -118,12 +169,33 @@ header {
   display: flex;
   justify-content: space-between;
   padding: 1rem;
-  background-color: #4d4d4d;
-  color: #e9e9e9;
+  background-color: #e9e9e9;
+  color: #000000;
   border-radius: 10px;
 }
 
-.todo-item button {
+.todo-item button,
+.project-item button {
+  border-radius: 20px;
+  width: 4rem;
+  padding: 5px;
+}
+
+.todo-item button,
+.project-item button {
+  background-color: #d9d9d9;
+  transition: background-color 200ms;
+}
+
+.todo-item button:hover,
+.project-item button:hover {
+  background-color: #ffffff;
+  transition: background-color 200ms;
+}
+
+.todo-item button:nth-child(4):hover,
+.project-item button:nth-child(2):hover {
+  background-color: #d90000;
   color: #e9e9e9;
 }
 
@@ -133,12 +205,12 @@ header {
 
 .strikethrough::before {
   position: absolute;
-  bottom: 50%;
+  bottom: 40%;
   content: '';
   left: -5%;
   width: 110%;
   height: 2px;
-  background-color: #ffffff;
+  background-color: #000000;
 }
 
 .task-priority-low {
@@ -157,7 +229,7 @@ header {
 }
 
 .task-priority-null {
-  border-left: 12px solid #e9e9e9;
+  border-left: 12px solid #ffffff;
   transition: border 150ms;
 }
 
@@ -195,32 +267,38 @@ dialog h2 {
   width: 25%;
 }
 .button-priority-low {
-  background-color: #a8a8a8;
-  border: 2px solid #a8a8a8;
+  background-color: #e9e9e9;
+  border: 2px solid #cfcfcf;
 }
 .button-priority-low:hover {
-  background-color: #a8a8a8;
+  background-color: #e9e9e9;
 }
 .button-priority-medium {
   background-color: #f2d73b;
-  border: 2px solid #f2d73b;
+  border: 2px solid #d3bb33;
 }
 .button-priority-medium:hover {
   background-color: #f2d73b;
 }
 .button-priority-high {
   background-color: #d90000;
-  border: 2px solid #d90000;
+  border: 2px solid #c00303;
 }
 .button-priority-high:hover {
   background-color: #d90000;
 }
 .button-priority-null {
   background-color: transparent;
+  transition: background-color 200ms;
 }
 
 .modal-input p {
   font-size: 1.3rem;
+}
+
+.modal-input input:focus {
+  outline: none;
+  border: 2px solid #909090;
 }
 
 .modal-input input {
@@ -246,9 +324,10 @@ dialog h2 {
   height: 40px;
 }
 
-.modal-input > div:nth-child(3) button {
-  width: 75px;
-  border-radius: 5px;
+.button-priority button {
+  width: 24px;
+  height: 24px;
+  border-radius: 50px;
 }
 
 .modal-input p {
@@ -276,19 +355,22 @@ dialog h2 {
 }
 
 .button-container > * {
-  border: solid 2px #f1f1f1;
+  border: solid 2px #dedede;
   padding: 3px;
   border-radius: 7px;
   width: 80px;
   height: 33;
+  transition: background-color 200ms;
 }
 
 .button-container > *:hover {
-  background-color: #c78cf7;
-  color: #f1f1f1;
+  background-color: #dedede;
+  transition: background-color 200ms;
 }
 
 .button-container > button:nth-child(2):hover {
-  background-color: #a038f6;
-  color: #f1f1f1;
+  background-color: #8a45c3;
+  border: solid 2px #8a45c3;
+  color: #dedede;
+  transition: background-color 200ms;
 }
