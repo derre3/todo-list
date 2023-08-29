@@ -9,6 +9,7 @@ import {
   setTodoPriorityClass,
   isTodoDone,
 } from './domHelper';
+import fileIcon from './icons/file.svg';
 
 function renderDetailsDialog(item, project) {
   const dialog = newElement(null, 'dialog');
@@ -249,6 +250,7 @@ function todoDialog(project) {
   inputTitle.setAttribute('type', 'text');
   inputDescription.setAttribute('type', 'text');
   inputDate.setAttribute('type', 'date');
+  buttonPriorityContainer.classList.add('button-priority');
   buttonPriority[0].classList.add('button-priority-low');
   buttonPriority[1].classList.add('button-priority-medium');
   buttonPriority[2].classList.add('button-priority-high');
@@ -346,13 +348,21 @@ function renderProject(project, projectCollection) {
   const projectContainer = document.querySelector('#project-container');
   const projectElement = newElement();
   const title = newElement(project.getTitle(), 'p');
-  const removeButton = newElement('remove', 'button');
-  const editButton = newElement('edit', 'button');
+  const removeButton = newElement('Delete', 'button');
+  const editButton = newElement('Edit', 'button');
   const buttonContainer = newElement();
+  const svgContainer = newElement();
+  const svgIcon = new Image();
 
   projectElement.classList.add('project-item');
+  svgContainer.classList.add('svg-container');
+  svgIcon.classList.add('svg-icon');
+  svgIcon.src = fileIcon;
+  title.classList.add('project-title');
+
   projectContainer.appendChild(projectElement);
-  projectElement.appendChild(title);
+  svgContainer.append(svgIcon, title);
+  projectElement.appendChild(svgContainer);
   buttonContainer.appendChild(editButton);
   buttonContainer.appendChild(removeButton);
   projectElement.appendChild(buttonContainer);

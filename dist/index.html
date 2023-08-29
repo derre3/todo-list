@@ -8,14 +8,29 @@
   <body>
     <div id="content">
       <header>
+        <img id="svg-logo" src="../src/icons/checklist.svg" alt="Logo" />
         <h1>Task Manager</h1>
       </header>
       <div class="sidebar">
         <div class="main-project-container">
-          <h3>Home</h3>
+          <div class="svg-container">
+            <img
+              class="svg-icon"
+              src="../src/icons/house.svg"
+              alt="home-icon"
+            />
+            <h3 id="home">Home</h3>
+          </div>
         </div>
         <div id="project-container">
-          <h3>Projects</h3>
+          <div class="svg-container">
+            <img
+              class="svg-icon"
+              src="../src/icons/drawer.svg"
+              alt="projects-icon"
+            />
+            <h3 id="projects">Projects</h3>
+          </div>
         </div>
         <button id="add-button">+</button>
       </div>
