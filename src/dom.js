@@ -84,6 +84,7 @@ function renderEditDialog(item, project) {
   inputTitle.setAttribute('type', 'text');
   inputDescription.setAttribute('type', 'text');
   inputDate.setAttribute('type', 'date');
+  buttonPriorityContainer.classList.add('button-priority');
   buttonPriority[0].classList.add('button-priority-low');
   buttonPriority[1].classList.add('button-priority-medium');
   buttonPriority[2].classList.add('button-priority-high');
@@ -322,6 +323,7 @@ function editProjectDialog(project, currentTitle) {
   buttonContainer.appendChild(buttonCancel);
   buttonContainer.appendChild(buttonConfirm);
   dialog.appendChild(buttonContainer);
+  buttonContainer.classList.add('button-container');
 
   buttonCancel.addEventListener('click', () => {
     dialog.remove();
