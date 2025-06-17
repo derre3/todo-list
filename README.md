@@ -36,6 +36,8 @@ Empty input handling = testing form validation boundaries
 
 ▶️ [Live Demo](https://derre3.github.io/todo-list/)
 
+---
+
 <a name="pt-br"></a>
 
 🛠️ Habilidades Técnicas Demonstradas
@@ -70,6 +72,8 @@ Casos Extremos:
 Tratamento de inputs vazios = testar validação de formulários
 
 ▶️ [Demo Online](https://derre3.github.io/todo-list/)
+
+---
 
 🔧 Tech Stack | Tecnologias
 JavaScript Webpack LocalStorage CSS Flexbox
