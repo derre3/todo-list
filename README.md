@@ -40,16 +40,13 @@ Empty input handling = testing form validation boundaries
 
 <a name="pt-br"></a>
 
-🛠️ Habilidades Técnicas Demonstradas
-Gerenciamento de Estado: Alternância entre tarefas ativas/concluídas
+## 🛠️ Habilidades Técnicas Demonstradas
 
-Operações CRUD: Criar, ler, atualizar e excluir tarefas
-
-Local Storage: Armazenamento persistente de dados
-
-Validação de Inputs: Prevenção de tarefas vazias
-
-Atualizações de DOM: Renderização dinâmica da lista
+- **Gerenciamento de Estado**: Alternância entre tarefas ativas/concluídas
+- **Operações CRUD**: Criar, ler, atualizar e excluir tarefas
+- **Local Storage**: Armazenamento persistente de dados
+- **Validação de Inputs**: Prevenção de tarefas vazias
+- **Atualizações de DOM**: Renderização dinâmica da lista
 
 ## 🎯 Relevância para Automação de QA
 
