@@ -51,7 +51,8 @@ Validação de Inputs: Prevenção de tarefas vazias
 
 Atualizações de DOM: Renderização dinâmica da lista
 
-🎯 Relevância para Automação de QA
+## 🎯 Relevância para Automação de QA
+
 ```mermaid
 graph TD
     A[Mudança de Estado] --> B[Criação de cenários de teste]
