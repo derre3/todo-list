@@ -13,27 +13,6 @@ Project focused on state management and CRUD | Projeto focado em gerenciamento d
 - **Input Validation**: Empty task prevention  
 - **DOM Updates**: Dynamic list rendering  
 
-## 🎯 Relevance for QA Automation  
-
-```mermaid
-graph TD
-    A[State Changes] --> B[Test Scenario Design]
-    C[Input Validation] --> D[Boundary Testing]
-    E[Data Persistence] --> F[Backend Integration Testing]
-```
-Testing Patterns:
-Each CRUD operation mirrors test cases for:
-
-E-commerce carts (add/remove items)
-
-User profile updates
-
-State Validation:
-Toggling task status = testing UI state changes in automation tools
-
-Edge Cases:
-Empty input handling = testing form validation boundaries
-
 ▶️ [Live Demo](https://derre3.github.io/todo-list/)
 
 ---
@@ -47,27 +26,6 @@ Empty input handling = testing form validation boundaries
 - **Local Storage**: Armazenamento persistente de dados
 - **Validação de Inputs**: Prevenção de tarefas vazias
 - **Atualizações de DOM**: Renderização dinâmica da lista
-
-## 🎯 Relevância para Automação de QA
-
-```mermaid
-graph TD
-    A[Mudança de Estado] --> B[Criação de cenários de teste]
-    C[Validação de Input] --> D[Teste de Limties]
-    E[Persistência de dados] --> F[Teste de integração Backend]
-```
-Padrões de Teste:
-Cada operação CRUD reflete casos de teste para:
-
-Carrinhos de e-commerce (adicionar/remover itens)
-
-Atualizações de perfil de usuário
-
-Validação de Estados:
-Alternar status de tarefas = testar mudanças de estado em ferramentas de automação
-
-Casos Extremos:
-Tratamento de inputs vazios = testar validação de formulários
 
 ▶️ [Demo Online](https://derre3.github.io/todo-list/)
 
